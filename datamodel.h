@@ -1,4 +1,5 @@
 #include"bits/stdc++.h"
+#include<string>
 using namespace std;
 class Item;
 class cart;
@@ -7,7 +8,7 @@ class Product{
     string name;
     int price;
     public:
-    Product(int u_id,string name,int price)
+    Product(int u_id,string name,int price) //constructor using Assignment list
     {
         id=u_id;
         this->name = name;
@@ -17,6 +18,11 @@ class Product{
         return name + " : Rs " + to_string(price) + "\n";
     }
 
+    string getShortName()
+    {
+        return name.substr(0,1);
+    }
+
     friend class Item;
 
 };
@@ -24,11 +30,16 @@ class Item{
     const Product product;
     int quility;
     public:
-    Item(Product p ,int q): product(p),quility(q){
+    Item(Product p ,int q): product(p),quility(q) //construction using initialize list
+    {
     }
 
     int getItemPrice(){
         return quility* product.price;
+    }
+
+    string getIteminfo(){
+        return to_string(quility) + " * " + product.name + " Rs : " + to_string(quility * product.price);
     }
 
     

@@ -13,6 +13,8 @@ using namespace std;
 
 Product* chooseProduct()
 {
+	
+	//Display list of products
     string productlist;
     cout << "Available Product " << endl;
     for (auto product : allProducts)
@@ -22,7 +24,7 @@ Product* chooseProduct()
 
     cout<<productlist<<endl;
     cout<<"-------------"<<endl;
-    string choice;
+    string choice;  //which fruit want to cadd
     cin>>choice;
 
     for(int i=0;i<allProducts.size();i++)
@@ -35,9 +37,30 @@ Product* chooseProduct()
     return NULL;
 }
 
+bool checkout(Cart &cart){
+    if(cart.isEmpty()){
+        return false;
+    }
+
+    int total = cart.getTotal();
+    cout<<"Pay in case"<<endl;
+    int paid;
+    cin>>paid;
+
+    if(paid>=total){
+        cout<<"change "<<paid-total <<endl;
+        cout<<"thank you for shopping!"<<endl;
+        return true;
+    }else{
+        cout<<"Not enough case"<<endl;
+        return false;
+    }
+}
+
 int main()
 {
     char action;
+    Cart cart;
     while (true)
     {
         cout << "select an action - (a)add item , (v)view item (c) checkout" << endl;
@@ -47,23 +70,26 @@ int main()
             Product *product  = chooseProduct();
             if(product!=NULL){
                 cout<<"Added to the cart "<<product->getDisplayName()<<endl;
+                cart.addProduct(*product);
 
             }
         }
         else if (action == 'v')
         {
+            cout<<"----------------"<<endl;
+            cout<<cart.viewcart()<<endl;
+            cout<<"-----------------"<<endl;
         }
         else
         {
+            cart.viewcart();
+            if(checkout(cart)){
+                break;
+            }
+
         }
-        /* code */
+        
     }
-
-    // Product p(1,"apple",20);
-    // cout<<p.getDisplayName()<<endl;
-
-    // Item fruit(p,3);
-    // cout<<fruit.getIteminfo();
 
     return 0;
 }
